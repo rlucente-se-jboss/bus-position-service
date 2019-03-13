@@ -147,8 +147,9 @@ func main() {
 			currentBusPositions = marshalledPosReport
 
 			if currentPosIndex == len(busPosTimeOrdered) {
-				ticker.Stop()
-				fmt.Println("No more bus position reports")
+				currentPosIndex = 0
+				applyTimeCorrection(busPosTimeOrdered)
+				fmt.Println("Restart bus position reports")
 			}
 		}
 	}()
