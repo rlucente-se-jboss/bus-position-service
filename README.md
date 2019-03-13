@@ -22,5 +22,9 @@ report data.  At startup, all position report timestamps are adjusted
 based on the offset between the earliest report time and the current
 time.
 
+To test with a smaller dataset,
+
+    ./bus -f test_sample.json
+
 ## TODO
 Package inside scratch image using CRI-O.
