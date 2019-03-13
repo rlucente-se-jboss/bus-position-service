@@ -18,3 +18,6 @@ To run the service,
 This will create a simple web service listening on port 8080 that
 returns a report of all current bus positions as a JSON string for
 each HTTP GET request.
+
+## TODO
+Package inside scratch image using CRI-O.
