@@ -118,6 +118,8 @@ func main() {
 		busPosMap := make(map[string]BusPositions)
 		var currentPosIndex int
 
+		fmt.Println("Total bus positions: ", len(busPosTimeOrdered))
+
 		// this loop repeats every two seconds
 		for _ = range ticker.C {
 			for _, bus := range busPosTimeOrdered[currentPosIndex:] {
@@ -127,9 +129,9 @@ func main() {
 				}
 
 				busPosMap[bus.VehicleID] = bus
-				currentPosIndex++
+				fmt.Println("Updated position report for bus: ", bus.VehicleID, ", at time: ", bus.DateTime, ", currentPosIndex: ", currentPosIndex)
 
-				fmt.Println("Updated position report for bus: ", bus.VehicleID, ", at time: ", bus.DateTime)
+				currentPosIndex++
 			}
 
 			var latestBusReport MetroTrackingData
