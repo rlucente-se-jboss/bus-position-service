@@ -167,7 +167,7 @@ func main() {
 				reverseBusPositions(busPosTimeOrdered)
 				applyTimeCorrection(busPosTimeOrdered)
 
-				fmt.Println("Restart bus position reports")
+				fmt.Println("Reverse the bus position reports")
 			}
 		}
 	}()
