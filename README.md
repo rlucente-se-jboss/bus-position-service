@@ -6,9 +6,9 @@ line argument.
 
 To build the service,
 
-    go build bus.go
+    CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' bus.go
 
-The executable will be called `bus`.
+The statically linked executable will be called `bus`.
 
 To run the service,
 
