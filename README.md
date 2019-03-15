@@ -4,6 +4,7 @@ service is seeded from the file `40min_busses.json` but that can
 be overridden on the command line using the `-f <filename>` command
 line argument.
 
+## Trying it out
 To build the service,
 
     CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' bus.go
@@ -26,5 +27,10 @@ To test with a smaller dataset,
 
     ./bus -f test_sample.json
 
-## TODO
-Package inside scratch image using CRI-O.
+## Building as a small container
+To build a container, review the file `create-image.sh` and set the
+parameters at the top appropriately.  Then run the script to execute
+the buildah commands to create your image:
+
+    ./create-image.sh
+
