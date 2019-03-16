@@ -28,6 +28,10 @@ To test with a smaller dataset,
     ./bus -f test_sample.json
 
 ## Building as a small container
+On a Fedora 29 system (or later), install the container tools:
+
+    dnf install -y buildah podman skopeo
+
 To build a container, review the file `create-image.sh` and set the
 parameters at the top appropriately.  Then run the script to execute
 the buildah commands to create your image:
