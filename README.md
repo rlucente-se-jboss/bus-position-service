@@ -27,21 +27,43 @@ time.
 Do a minimal install of RHEL 7.6+ and then run the following script
 as root to enable building containers via the CRI-O tools.  Be sure
 to edit the `RHSM_USER` and `POOL` parameters to match your registered
-user name and desired Pool ID from the [Red Hat Customer
-Portal](https://access.redhat.com).
+user name and desired Pool ID from the [Red Hat Customer Portal](https://access.redhat.com).
 
     ./setup-rhel.sh
 
 To build a container, review the file `create-image.sh` and set the
 parameters at the top appropriately.  Then run the following script
-as root to execute the buildah commands to create your image:
+as `root` to execute the buildah commands to create your image:
 
     ./create-image.sh
 
-To see the image that was built, run this command as root:
+To see the image that was built, run this command as `root`:
 
     buildah images
 
+To export as a docker-archive (format equivalent to `docker save`),
+do the following as `root`:
+
+    skopeo copy containers-storage:localhost/bus-service:latest docker-archive://$(pwd)/bus-service\@latest.tar
+    gzip bus-service\@latest.tar
+
 ## Running in OpenShift
-TODO
+The following example works with [minishift](https://developers.redhat.com/products/cdk/download/)
+but it can be adapted to other OpenShift 3 environments.  Review
+the file `import-imagestream.sh` and adjust the `APP` and `PROJECT`
+parameters to match your needs.  The defaults should be fine for
+the `bus-service` docker image.  Next, run the following command
+to import the tar.gz image archive:
+
+    ./import-imagestream.sh
+
+This will add a tagged docker image to the local registry and also add
+an imagestream to the `openshift` project.  To create an application,
+login as an unprivileged OpenShift user and run the command:
+
+    oc new-app bus-service
+
+The data for the `bus-service` is in the container file
+`/data/busses.json`.  Simply override that with a volume mount or
+configmap and restart the pod.
 
