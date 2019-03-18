@@ -42,7 +42,7 @@ func (abp AllBusPositions) Swap(i, j int)      { abp[i], abp[j] = abp[j], abp[i]
 func (abp AllBusPositions) Len() int           { return len(abp) }
 
 const (
-	jsonFilePath = "./40min_busses.json"
+	jsonFilePath = "./data/busses.json"
 )
 
 var fileArg = flag.String("f", jsonFilePath, "JSON file containing bus position data")
