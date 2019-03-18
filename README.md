@@ -66,6 +66,10 @@ login as an unprivileged OpenShift user and run the command:
     oc expose svc/bus-service
 
 The data for the `bus-service` is in the container file
-`/data/busses.json`.  Simply override that with a volume mount or
-configmap and restart the pod.
+`/data/busses.json`.  This data set is pretty small.  You can replace
+it with a larger dataset by overriding the container filesystem
+location `/data` with either a persistent volume claim or configmap.
+This project includes a much larger `40min_busses.json` file that
+can be renamed `busses.json` and placed within the container's
+overridden `/data` directory.
 
