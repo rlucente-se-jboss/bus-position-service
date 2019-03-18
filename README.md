@@ -1,15 +1,15 @@
 # Lightweight Web Service
 This is a very lightweight bus position reporting service.  The
-service is seeded from the file `40min_busses.json` but that can
-be overridden on the command line using the `-f <filename>` command
+service is seeded from a JSON file of bus reports which can be
+overridden on the command line using the `-f <filename>` command
 line argument.
 
 ## Trying it out
-To build the service,
+To build the service locally,
 
-    CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' bus.go
+    go build bus.go
 
-The statically linked executable will be called `bus`.
+The executable will be called `bus`.
 
 To run the service,
 
@@ -23,18 +23,25 @@ report data.  At startup, all position report timestamps are adjusted
 based on the offset between the earliest report time and the current
 time.
 
-To test with a smaller dataset,
-
-    ./bus -f test_sample.json
-
 ## Building as a small container
-On a Fedora 29 system (or later), install the container tools:
+Do a minimal install of RHEL 7.6+ and then run the following script
+as root to enable building containers via the CRI-O tools.  Be sure
+to edit the `RHSM_USER` and `POOL` parameters to match your registered
+user name and desired Pool ID from the [Red Hat Customer
+Portal](https://access.redhat.com).
 
-    sudo dnf install -y buildah podman skopeo
+    ./setup-rhel.sh
 
 To build a container, review the file `create-image.sh` and set the
-parameters at the top appropriately.  Then run the script to execute
-the buildah commands to create your image:
+parameters at the top appropriately.  Then run the following script
+as root to execute the buildah commands to create your image:
 
     ./create-image.sh
+
+To see the image that was built, run this command as root:
+
+    buildah images
+
+## Running in OpenShift
+TODO
 
