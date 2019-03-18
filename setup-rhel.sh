@@ -44,7 +44,7 @@ subscription-manager repos \
     --enable=rhel-7-server-extras-rpms
 
 yum -y update
-yum -y install buildah git golang yum-utils
+yum -y install buildah skopeo git golang yum-utils
 yum -y clean all
 
 # enable user namespace remapping
