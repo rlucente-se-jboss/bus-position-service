@@ -59,7 +59,7 @@ to import the tar.gz image archive:
 
 This will add a tagged docker image to the local registry and also add
 an imagestream to the `openshift` project.  To create an application,
-login as an unprivileged OpenShift user and run the command:
+login as an unprivileged OpenShift user and run the commands:
 
     oc new-app bus-service
     oc expose dc/bus-service --port=8080
