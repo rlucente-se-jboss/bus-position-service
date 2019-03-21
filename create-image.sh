@@ -16,6 +16,7 @@ go build bus.go
 # identify all dependencies for bash
 # 
 echo bash.x86_64 > pending-list.txt
+echo tar.x86_64 >> pending-list.txt
 truncate -s 0 resolved-list.txt
 
 # repeat while still pending dependencies

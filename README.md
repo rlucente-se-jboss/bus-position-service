@@ -65,11 +65,20 @@ login as an unprivileged OpenShift user and run the commands:
     oc expose dc/bus-service --port=8080
     oc expose svc/bus-service
 
-The data for the `bus-service` is in the container file
-`/data/busses.json`.  This data set is pretty small.  You can replace
-it with a larger dataset by overriding the container filesystem
-location `/data` with either a persistent volume claim or configmap.
-This project includes a much larger `40min_busses.json` file that
-can be renamed `busses.json` and placed within the container's
-overridden `/data` directory.
+The `bus-service` looks for a file in the directory `/data/busses.json`.
+If none is found, it uses a small default data set.  You can use a
+different dataset by overriding the container filesystem location
+`/data` with a persistent volume claim.  This project includes a
+large `40min_busses.json` file that can be renamed `busses.json`
+and placed within the container's overridden `/data` directory.
+The following commands work fine on `minishift` but should easily
+work in other environments as well:
+
+    oc create -f busses-pvc.yaml
+    oc set volume dc bus-service --add --name=busses-data --type=persistentVolumeClaim \
+        --claim-name=busses-data --mount-path=/data
+    oc cp data/40min_busses.json \
+        $(oc get pods | grep bus-service | awk 'END{print $1}'):/data/busses.json
+    oc scale --replicas=0 dc/bus-service
+    oc scale --replicas=1 dc/bus-service
 
