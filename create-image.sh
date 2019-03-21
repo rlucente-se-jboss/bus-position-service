@@ -19,7 +19,7 @@ echo bash.x86_64 > pending-list.txt
 truncate -s 0 resolved-list.txt
 
 # repeat while still pending dependencies
-while [[ "$(wc -l pending-list.txt | awk '{print $1}')" -gt 0 ]]
+while [[ ! -s pending-list.txt ]]
 do
     # for each package in pending-list, find all dependent packages
     # (limited to x86_64 and noarch)
