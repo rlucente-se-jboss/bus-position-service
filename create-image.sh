@@ -11,9 +11,13 @@ go build bus.go
 #
 # the --resolve argument on yumdownloader doesn't seem to want to
 # pull down all the transitive dependencies, so we'll do it quickly
-# in a loop
+# in a loop.  The only packages we need are:
 #
-# identify all dependencies for bash
+# bash - enables starting the container
+# tar -  enables 'oc cp' to copy data into a container mounted
+#        volume
+#
+# identify all dependencies for bash and tar
 # 
 echo bash.x86_64 > pending-list.txt
 echo tar.x86_64 >> pending-list.txt
@@ -64,7 +68,7 @@ yum install --installroot $scratchmnt --releasever=7 \
 yum clean all -y --installroot $scratchmnt --releasever=7
 rm -rf $scratchmnt/var/cache/yum
 
-buildah config --entrypoint /bus $newcontainer
+buildah config --entrypoint /bus --port 8080 --user 1000 $newcontainer
 buildah config --author "$AUTHOR" --label name="$APP_NAME" $newcontainer
 
 buildah commit $newcontainer bus-service

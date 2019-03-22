@@ -62,7 +62,6 @@ an imagestream to the `openshift` project.  To create an application,
 login as an unprivileged OpenShift user and run the commands:
 
     oc new-app bus-service
-    oc expose dc/bus-service --port=8080
     oc expose svc/bus-service
 
 The `bus-service` looks for a file in the directory `/data/busses.json`.
