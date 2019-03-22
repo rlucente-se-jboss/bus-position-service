@@ -76,8 +76,7 @@ work in other environments as well:
     oc create -f busses-pvc.yaml
     oc set volume dc bus-service --add --name=busses-data --type=persistentVolumeClaim \
         --claim-name=busses-data --mount-path=/data
-    oc cp data/40min_busses.json \
-        $(oc get pods | grep bus-service | awk 'END{print $1}'):/data/busses.json
-    oc scale --replicas=0 dc/bus-service
-    oc scale --replicas=1 dc/bus-service
+    POD_ID=$(oc get pods | grep bus-service | awk 'END{print $1}')
+    oc cp data/40min_busses.json $POD_ID:/data/busses.json
+    oc delete pod $POD_ID
 
