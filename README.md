@@ -52,12 +52,12 @@ The following example works with [minishift](https://developers.redhat.com/produ
 but it can be adapted to other OpenShift 3 environments.  Review
 the file `import-imagestream.sh` and adjust the `APP` and `PROJECT`
 parameters to match your needs.  The defaults should be fine for
-the `bus-service` docker image.  Next, run the following command
-to import the tar.gz image archive:
+the `bus-service` OCI image.  Next, run the following command to
+import the tar.gz image archive:
 
     ./import-imagestream.sh
 
-This will add a tagged docker image to the local registry and also add
+This will add a tagged OCI image to the local registry and also add
 an imagestream to the `openshift` project.  To create an application,
 login as an unprivileged OpenShift user and run the commands:
 
