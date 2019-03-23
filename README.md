@@ -76,7 +76,7 @@ work in other environments as well:
     oc set volume dc bus-service --add --name=busses-data \
         --type=pvc \
         --claim-name=busses-claim \
-        --claim-size=10G \
+        --claim-size=1G \
         --mount-path=/data
     POD_ID=$(oc get pods | grep bus-service | awk 'END{print $1}')
     oc cp data/40min_busses.json $POD_ID:/data/busses.json
