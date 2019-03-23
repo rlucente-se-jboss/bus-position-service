@@ -73,9 +73,11 @@ and placed within the container's overridden `/data` directory.
 The following commands work fine on `minishift` but should easily
 work in other environments as well:
 
-    oc create -f busses-pvc.yaml
-    oc set volume dc bus-service --add --name=busses-data --type=persistentVolumeClaim \
-        --claim-name=busses-data --mount-path=/data
+    oc set volume dc bus-service --add --name=busses-data \
+        --type=pvc \
+        --claim-name=busses-claim \
+        --claim-size=10G \
+        --mount-path=/data
     POD_ID=$(oc get pods | grep bus-service | awk 'END{print $1}')
     oc cp data/40min_busses.json $POD_ID:/data/busses.json
     oc delete pod $POD_ID
