@@ -57,7 +57,7 @@ mkdir -p $scratchmnt/data
 cp bus $scratchmnt
 cp data/busses.json $scratchmnt/data
 
-# only installing bash (and it's dependencies)
+# only installing bash and tar (and their dependencies)
 rpm --root $scratchmnt --initdb
 rm -fr /tmp/*.rpm
 cat resolved-list.txt | xargs yumdownloader --destdir=/tmp
