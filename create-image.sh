@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+# This builds a more canonical image with the ability to copy files
+# to the mounted data volume
+
 APP_NAME="bus-service"
 AUTHOR="YOUR NAME"
 
 #
-# build the app
+# build the app (not statically linked since we get glibc from the
+# tar installation)
 #
 go build bus.go
 
@@ -13,14 +17,12 @@ go build bus.go
 # pull down all the transitive dependencies, so we'll do it quickly
 # in a loop.  The only packages we need are:
 #
-# bash - enables starting the container
 # tar -  enables 'oc cp' to copy data into a container mounted
 #        volume
 #
 # identify all dependencies for bash and tar
 # 
-echo bash.x86_64 > pending-list.txt
-echo tar.x86_64 >> pending-list.txt
+echo tar.x86_64 > pending-list.txt
 truncate -s 0 resolved-list.txt
 
 # repeat while still pending dependencies
@@ -68,7 +70,7 @@ yum install --installroot $scratchmnt --releasever=7 \
 yum clean all -y --installroot $scratchmnt --releasever=7
 rm -rf $scratchmnt/var/cache/yum
 
-buildah config --entrypoint /bus --port 8080 --user 1000 $newcontainer
+buildah config --entrypoint '["/bus"]' --port 8080 --user 1000 $newcontainer
 buildah config --author "$AUTHOR" --label name="$APP_NAME" $newcontainer
 
 buildah commit $newcontainer bus-service
