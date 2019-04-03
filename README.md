@@ -37,6 +37,13 @@ as `root` to execute the buildah commands to create your image:
 
     ./create-image.sh
 
+The generated container includes the `tar` command so that you can
+use `oc cp` to copy alternative datasets to the container's `/data`
+directory.  As an alternative, you can build the smallest container
+image with just the executable and a small static dataset using:
+
+    ./create-smallest-image.sh
+
 To see the image that was built, run this command as `root`:
 
     buildah images
@@ -65,8 +72,10 @@ login as an unprivileged OpenShift user and run the commands:
     oc expose svc/bus-service
 
 The `bus-service` looks for a file in the directory `/data/busses.json`.
-If none is found, it uses a small default data set.  You can use a
-different dataset by overriding the container filesystem location
+If none is found, it uses a small default data set.
+
+If you built the image that includes the `tar` command, you can use
+a different dataset by overriding the container filesystem location
 `/data` with a persistent volume claim.  This project includes a
 large `40min_busses.json` file that can be renamed `busses.json`
 and placed within the container's overridden `/data` directory.
